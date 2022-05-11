@@ -16,21 +16,25 @@ const FiltroStyled = styled.div`
     margin: 0;
   }
 `
-
-class Filtro extends React.Component {
+ class Filtro extends React.Component {
   render() {
     return (
       <FiltroStyled>
-        <h2>Filtros</h2>
-        <p>Valor mínimo:</p>
-        <input></input>
-        <p>Valor máximo:</p>
-        <input></input>
-        <p>Busca por nome:</p>
-        <input></input>
+          <div>
+        <h3>Filtros</h3>
+      
+        <p>Valores Minimos:</p>
+        <input type="number" value={this.props.valueValMin} onChange={this.props.onChangeValorMin} name={this.props.nome} />
+
+        <p>Valores Maximos:</p>
+        <input type="number" value={this.props.valueValMax} onChange={this.props.onChangeValorMax} name={this.props.nome} />
+
+        <p>Buscar por produto:</p>
+        <input value={this.props.valueProduto} onChange={this.props.onChangeProduto} name={this.props.nome}/>
+      </div>
       </FiltroStyled>
-    )
+    );
   }
 }
 
-export default Filtro
+export default Filtro;
