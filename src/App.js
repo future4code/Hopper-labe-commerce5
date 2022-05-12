@@ -63,75 +63,106 @@ class App extends React.Component {
       },
     ],
 
-    filtroProduto: "",
-    inputValorMin: "",
-    inputValorMax: ""
+    filtroNome: "",
+    filtroValorMin: "",
+    filtroValorMax: "",
+    /* order: "", */
   };
 
   //   adicionaViagemCarrinho = () => {
   //    //faça aqui a lógica do carrinho//
 
   valorMin = (event) => {
-    this.setState({ inputValorMin: event.target.value });
+    this.setState({ filtroValorMin: event.target.value });
   };
 
   valorMax = (event) => {
-    this.setState({ inputValorMax: event.target.value });
+    this.setState({ filtroValorMax: event.target.value });
   };
 
   produto = (event) => {
-    this.setState({ filtroProduto: event.target.value });
+    this.setState({ filtroNome: event.target.value });
+  };
+
+  onChangeOrder = (event) => {
+    this.setState({ order: event.target.value });
   };
 
   render() {
-
-    /* FILTRO SEM FINALIZAR, SO FUNCIONA MESMO O DE NOME DO PRODUTO*/
-
-    const viagensFiltradasNome = this.state.pacotesViagens.filter((viagem) => {
-      return viagem.name
-        .toLowerCase()
-        .includes(this.state.filtroProduto.toLowerCase());
-    });
-
-    /* const viagensFiltradasValor = this.state.pacotesViagens.filter((viagem) => {
-      
-       return (viagem.value <= this.state.inputValorMax || viagem.value >= this.state.inputValorMin)
-        
-    }); */
-
-    const pacotesMapeados = viagensFiltradasNome.map((pacotes, index) => {
-      return (
-        <SecaoPacotesStyle key={index}>
-          <div>
-            <div>{pacotes.img}</div>
-            <p>{pacotes.name}</p>
-            <p>Valor: R$ {pacotes.value}</p>
-            <button>Adicionar ao Carrinho</button>
-          </div>
-        </SecaoPacotesStyle>
-      );
-    });
+    const pacotesFiltrados = this.state.pacotesViagens
+      .filter((pacotes) => {
+        return pacotes.name
+          .toLowerCase()
+          .includes(this.state.filtroNome.toLowerCase());
+      })
+      .filter((pacotes) => {
+        return (
+          this.state.filtroValorMin === "" ||
+          pacotes.value >= this.state.filtroValorMin
+        );
+      })
+      .filter((pacotes) => {
+        return (
+          this.state.filtroValorMax === "" ||
+          pacotes.value <= this.state.filtroValorMax
+        );
+      })
+      /* .sort((pacotes, proxPacote) => {
+        switch (this.state.order) {
+          case "crescente":
+            return (
+              pacotes.value >= proxPacote.value ||
+              pacotes.name.lolcaleCompare(proxPacote.name) >=
+                proxPacote.name.lolcaleCompare(pacotes.name)
+            );
+          default:
+            return (
+              pacotes.value <= proxPacote.value ||
+              pacotes.name.lolcaleCompare(proxPacote.name) <=
+                proxPacote.name.lolcaleCompare(pacotes.name)
+            );
+        }
+      }) */
+      .map((pacotes, index) => {
+        return (
+          <SecaoPacotesStyle key={index}>
+            <div>
+              <div>{pacotes.img}</div>
+              <p>{pacotes.name}</p>
+              <p>Valor: R$ {pacotes.value}</p>
+              <button>Adicionar ao Carrinho</button>
+            </div>
+          </SecaoPacotesStyle>
+        );
+      });
 
     return (
       <SecaoStyleHome>
         <Filtro
-          nome="minimo"
-          valueValMin={this.state.inputValorMin}
+          valueValMin={this.state.filtroValorMin}
           onChangeValorMin={this.valorMin}
-          nome="maximo"
-          valueValMax={this.state.inputValorMax}
+          valueValMax={this.state.filtroValorMax}
           onChangeValorMax={this.valorMax}
-          nome="filterProduto"
-          valueProduto={this.state.filtroProduto}
+          valueProduto={this.state.filtroNome}
           onChangeProduto={this.produto}
         />
 
         <div>
           <p>Quantidade: 10</p>
-          {/* <p>
-            Ordenação: <section></section>
-          </p> */}
-          <div>{pacotesMapeados}</div>
+
+          <label>
+            Ordenação:
+            <select
+              name="order"
+              value={this.state.order}
+              onChange={this.onChangeOrder}
+            >
+              <option value="cres">Crescente</option>
+              <option value="decres">Decrescente</option>
+            </select>
+          </label>
+
+          <div>{pacotesFiltrados}</div>
         </div>
 
         <div>
