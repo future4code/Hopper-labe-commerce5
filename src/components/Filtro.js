@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const FiltroStyled = styled.div`
-  display: flex;
+display: flex;
   flex-direction: column;
   border: 1px solid;
   width: 13rem;
@@ -15,7 +15,9 @@ const FiltroStyled = styled.div`
     padding: 0;
     margin: 0;
   }
+
 `
+
  class Filtro extends React.Component {
   render() {
     return (
@@ -24,13 +26,13 @@ const FiltroStyled = styled.div`
         <h3>Filtros</h3>
       
         <p>Valores Minimos:</p>
-        <input type="number" value={this.props.valueValMin} onChange={this.props.onChangeValorMin} name={this.props.nome} />
+        <input type="number" value={this.props.valueValMin} onChange={this.props.onChangeValorMin} />
 
         <p>Valores Maximos:</p>
-        <input type="number" value={this.props.valueValMax} onChange={this.props.onChangeValorMax} name={this.props.nome} />
+        <input type="number" value={this.props.valueValMax} onChange={this.props.onChangeValorMax}  />
 
         <p>Buscar por produto:</p>
-        <input value={this.props.valueProduto} onChange={this.props.onChangeProduto} name={this.props.nome}/>
+        <input value={this.props.valueProduto} onChange={this.props.onChangeProduto} placeholder="Pesquisa"/>
       </div>
       </FiltroStyled>
     );
