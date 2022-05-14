@@ -6,7 +6,7 @@ display: flex;
   flex-direction: column;
   border: 1px solid;
   width: 13rem;
-  height: 20rem;
+  height: 50%;
   padding: 1rem;
   input {
     width: 80%;
