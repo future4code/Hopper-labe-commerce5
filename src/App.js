@@ -1,21 +1,45 @@
 import React from "react";
 import styled from "styled-components";
+// import { createGlobalStyle } from "styled-components";
 import Carrinho from "./components/Carrinho";
 import Filtro from "./components/Filtro";
+import Astro1 from "./img/Astro1.png";
+import Astro2 from "./img/Astro2.png";
+import Astro3 from "./img/Astro3.png";
+import Astro4 from "./img/Astro4(1).png";
+import Astro5 from "./img/Astro5.png";
 
-const Imagem = styled.div`
+// const GlobalStyle = createGlobalStyle`
+// *{
+//   box-sizing: border-box;
+//   margin: 0;
+//   padding: 0;
+// }
+// `;
+
+const Imagem = styled.img`
   height: 100px;
 `;
 const SecaoPacotesStyle = styled.div`
   display: flex;
-  flex-direction: row;
+  border: 1px;
+  padding: 10px;
+  background-color: aquamarine;
+  margin: 10px;
+`;
+
+const SecaoPacFiltrado = styled.div`
+  display: flex;
+  background-color: #cfbfb2;
+  justify-content: space-between;
 `;
 
 const SecaoStyleHome = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  margin: 1rem;
+  background-color: beige;
+  height: 100vh;
+  width: 100vw;
 `;
 
 class App extends React.Component {
@@ -25,52 +49,48 @@ class App extends React.Component {
         id: 1,
         name: "Lua Calisto",
         value: 300.0,
-        img: (
-          <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
-        ),
+        img: <Imagem src={Astro1} />,
       },
       {
         id: 2,
         name: "Lua Almateia",
         value: 900.0,
-        img: (
-          <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
-        ),
+        img: <Imagem src={Astro2} />,
       },
       {
         id: 3,
         name: "Lua IO",
         value: 300.0,
-        img: (
-          <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
-        ),
+        img: <Imagem src={Astro3} />,
       },
       {
         id: 4,
         name: "Lua Ganímedes",
         value: 500.0,
-        img: (
-          <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
-        ),
+        img: <Imagem src={Astro4} />,
       },
       {
         id: 5,
         name: "Lua Europa",
         value: 800.0,
-        img: (
-          <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
-        ),
+        img: <Imagem src={Astro5} />,
       },
     ],
 
     filtroNome: "",
     filtroValorMin: "",
     filtroValorMax: "",
-    /* order: "", */
+
+    order: "crescente",
   };
 
   //   adicionaViagemCarrinho = () => {
   //    //faça aqui a lógica do carrinho//
+  // addCarinho = (viagem) => {
+  //   this.setState({
+  //     carrinho: [...this.state.carrinho, viagem],
+  //   });
+  // };
 
   valorMin = (event) => {
     this.setState({ filtroValorMin: event.target.value });
@@ -92,6 +112,7 @@ class App extends React.Component {
     const pacotesFiltrados = this.state.pacotesViagens
       .filter((pacotes) => {
         return pacotes.name
+
           .toLowerCase()
           .includes(this.state.filtroNome.toLowerCase());
       })
@@ -107,22 +128,19 @@ class App extends React.Component {
           pacotes.value <= this.state.filtroValorMax
         );
       })
-      /* .sort((pacotes, proxPacote) => {
+
+      .sort((a, b) => {
         switch (this.state.order) {
           case "crescente":
-            return (
-              pacotes.value >= proxPacote.value ||
-              pacotes.name.lolcaleCompare(proxPacote.name) >=
-                proxPacote.name.lolcaleCompare(pacotes.name)
-            );
+            return  a.value - b.value
+              
+          
           default:
-            return (
-              pacotes.value <= proxPacote.value ||
-              pacotes.name.lolcaleCompare(proxPacote.name) <=
-                proxPacote.name.lolcaleCompare(pacotes.name)
-            );
-        }
-      }) */
+            return b.value - a.value;
+              
+            
+        };
+      })
       .map((pacotes, index) => {
         return (
           <SecaoPacotesStyle key={index}>
@@ -130,7 +148,10 @@ class App extends React.Component {
               <div>{pacotes.img}</div>
               <p>{pacotes.name}</p>
               <p>Valor: R$ {pacotes.value}</p>
-              <button>Adicionar ao Carrinho</button>
+              <button >
+                
+                Adicionar ao Carrinho
+              </button>
             </div>
           </SecaoPacotesStyle>
         );
@@ -145,6 +166,7 @@ class App extends React.Component {
           onChangeValorMax={this.valorMax}
           valueProduto={this.state.filtroNome}
           onChangeProduto={this.produto}
+          onChangeOrder={this.state.order}
         />
 
         <div>
@@ -157,12 +179,12 @@ class App extends React.Component {
               value={this.state.order}
               onChange={this.onChangeOrder}
             >
-              <option value="cres">Crescente</option>
-              <option value="decres">Decrescente</option>
+              <option value="crescente">Crescente</option>
+              <option value="decrescente">Decrescente</option>
             </select>
           </label>
 
-          <div>{pacotesFiltrados}</div>
+          <SecaoPacFiltrado>{pacotesFiltrados}</SecaoPacFiltrado>
         </div>
 
         <div>
