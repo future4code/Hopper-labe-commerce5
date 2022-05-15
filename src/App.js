@@ -8,6 +8,8 @@ import Astro2 from "./img/Astro2.png";
 import Astro3 from "./img/Astro3.png";
 import Astro4 from "./img/Astro4(1).png";
 import Astro5 from "./img/Astro5.png";
+import ImagemFundo from "./img/LuaFundoInteira.png"
+import Foguete from "./icons/foguete.png";
 
 const GlobalStyle = createGlobalStyle`
  *{
@@ -15,22 +17,53 @@ const GlobalStyle = createGlobalStyle`
  }
  `;
 
- const Header = styled.header`
+
+const Header = styled.header`
  
  display: flex;
- flex-direction: column;
- align-items:center;
- padding:4vh;
- color:floralwhite;
- font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
- background-image: url(https://i0.wp.com/www.eusemfronteiras.com.br/wp-content/uploads/2018/07/49046802_m.jpg?ssl=1);
+ 
+ padding:2vh;
+ 
+ background-color: #e3e2df;
+ justify-content: space-between;
+ align-items: center;
+ h1{
+   display: flex;
+   color: #1f110e;
+   /* align-items:left; */
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+   
+   
+ }
+ h3{
+   display: flex;
+   color: #1f110e;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   font-weight: bolder;
+  
+   
+ }
  `
+const ImagemLogo = styled.img`
+display:flex;
+height: 30px;
+width: 30px;
 
- const Main = styled.main`
+
+
+`
+const Main = styled.main`
  display: flex;
  justify-content: space-evenly;
  align-items: center;
- margin-top: 5vh;
+ background-image: url(${ImagemFundo});
+background-size: cover;
+/* h3{
+  display: flex;
+  font-size:25px;
+   color: #ede8d1;
+
+} */
  
  `
 
@@ -44,17 +77,28 @@ const Card = styled.div`
   text-align:center;
   border: 1px;
   padding: 3vh 2vw;
-  background-color: aquamarine;
+  background-color: #bbb8a3;
   margin: 10px;
   font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
 `;
 
 const SecaoProduto = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 2fr 2fr;
-  background-color: #cfbfb2;
-  margin-top: 3vh;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: center;
+  h3{
+  display: flex;
+  font-size:25px;
+   color: #ede8d1;
+
+}
+
+  
+/* align-self: flex-end; */
+  
+  /* background-color: #cfbfb2; */
+  /* margin-top: 3vh; */
   
 `;
 
@@ -62,6 +106,22 @@ const Ordenacao = styled.div`
   font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   display: flex;
   justify-content: space-between;
+  
+  p{
+   font-size:25px;
+   color: #ede8d1;
+
+  }
+  label{
+    font-size: 25px;
+    color: #ede8d1;
+  }
+
+  select{
+    font-size: 20px;
+    background-color : #ede8d1;
+    color:#797870;
+  }
 
 `
 
@@ -134,22 +194,22 @@ class App extends React.Component {
 
   render() {
     const pacotesFiltrados = this.state.pacotesViagens
-      .filter((pacotes) => {
-        return pacotes.name
+      .filter((pacote) => {
+        return pacote.name
 
           .toLowerCase()
           .includes(this.state.filtroNome.toLowerCase());
       })
-      .filter((pacotes) => {
+      .filter((pacote) => {
         return (
           this.state.filtroValorMin === "" ||
-          pacotes.value >= this.state.filtroValorMin
+          pacote.value >= this.state.filtroValorMin
         );
       })
-      .filter((pacotes) => {
+      .filter((pacote) => {
         return (
           this.state.filtroValorMax === "" ||
-          pacotes.value <= this.state.filtroValorMax
+          pacote.value <= this.state.filtroValorMax
         );
       })
 
@@ -162,13 +222,13 @@ class App extends React.Component {
             return b.value - a.value;
         }
       })
-      .map((pacotes, index) => {
+      .map((pacote, index) => {
         return (
           <Card key={index}>
             <div>
-              <div>{pacotes.img}</div>
-              <p>{pacotes.name}</p>
-              <p>Valor: R$ {pacotes.value}</p>
+              <div>{pacote.img}</div>
+              <p>{pacote.name}</p>
+              <p>Valor: R$ {pacote.value}</p>
               <button>Adicionar ao Carrinho</button>
             </div>
           </Card>
@@ -180,43 +240,52 @@ class App extends React.Component {
         <GlobalStyle />
         <Header>
           <h1>LUNÁSTICA</h1>
-          <h3>REFERENCIA ESPACIAL EM VIAGENS LUNARES!</h3>
+          <h3>REFERÊNCIA MUNDIAL EM VIAGENS LUNARES</h3>
+          <ImagemLogo src={Foguete} />
+
         </Header>
         <Main>
-        <Filtro
-          valueValMin={this.state.filtroValorMin}
-          onChangeValorMin={this.valorMin}
-          valueValMax={this.state.filtroValorMax}
-          onChangeValorMax={this.valorMax}
-          valueProduto={this.state.filtroNome}
-          onChangeProduto={this.produto}
-          onChangeOrder={this.state.order}
-        />
 
-        <div>
-        <Ordenacao>
-          <p>Quantidade: 10</p>
+          <Filtro
+            valueValMin={this.state.filtroValorMin}
+            onChangeValorMin={this.valorMin}
+            valueValMax={this.state.filtroValorMax}
+            onChangeValorMax={this.valorMax}
+            valueProduto={this.state.filtroNome}
+            onChangeProduto={this.produto}
+            onChangeOrder={this.state.order}
+          />
 
-          <label>
-            Ordenação:
-            <select
-              name="order"
-              value={this.state.order}
-              onChange={this.onChangeOrder}
-            >
-              <option value="crescente">Crescente</option>
-              <option value="decrescente">Decrescente</option>
-            </select>
-          </label>
-          </Ordenacao>
-          <SecaoProduto>{pacotesFiltrados}</SecaoProduto>
-        </div>
+          <div>
+            <Ordenacao>
+              <p>Quantidade: 10</p>
 
-        
+              <label>
+                Ordenação:
+                <select
+                  name="order"
+                  value={this.state.order}
+                  onChange={this.onChangeOrder}
+                >
+                  <option value="crescente">Crescente</option>
+                  <option value="decrescente">Decrescente</option>
+                </select>
+              </label>
+            </Ordenacao>
+
+            <SecaoProduto>
+              
+
+              {pacotesFiltrados}
+
+            </SecaoProduto>
+          </div>
+
+
           <Carrinho></Carrinho>
-       
 
-      </Main>
+
+        </Main>
       </div>
     );
   }

@@ -8,13 +8,11 @@ display: flex;
   width: 13rem;
   height: 50%;
   padding: 10vh 2vw;
+  color:#ede8d1;
   input {
     width: 80%;
   }
-  h2 {
-    padding: 0;
-    margin: 0;
-  }
+  
   align-self: flex-start;
   margin-top: 7vh;
 
@@ -23,11 +21,14 @@ display: flex;
 const Filtros = styled.div`
   font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 h3{
-  text-decoration-line: underline;
+  text-decoration: underline;
+  font-size: 25px;
+  font-weight: 400;
 }
 
   p{
   margin-top:5vh;
+  font-size: 20px;
 }
 
 
@@ -39,12 +40,12 @@ h3{
     return (
       <FiltroStyled>
           <Filtros>
-        <h3>Filtros</h3>
+        <h3>FILTROS</h3>
       
-        <p>Valores Minimos:</p>
+        <p>Valores Mínimos:</p>
         <input type="number" value={this.props.valueValMin} onChange={this.props.onChangeValorMin} />
 
-        <p>Valores Maximos:</p>
+        <p>Valores Máximos:</p>
         <input type="number" value={this.props.valueValMax} onChange={this.props.onChangeValorMax}  />
 
         <p>Buscar por produto:</p>
