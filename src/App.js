@@ -17,6 +17,19 @@ const SecaoStyleHome = styled.div`
   justify-content: space-between;
   margin: 1rem;
 `;
+const NovoCarrinho = styled.div`
+display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  width: 13rem;
+  height: 20rem;
+  padding: 1rem;
+ 
+  h2 {
+    padding: 0;
+    margin: 0;
+  }
+`
 
 class App extends React.Component {
   state = {
@@ -28,6 +41,7 @@ class App extends React.Component {
         img: (
           <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
         ),
+       
       },
       {
         id: 2,
@@ -60,6 +74,7 @@ class App extends React.Component {
         img: (
           <Imagem src="https://st2.depositphotos.com/3732989/12445/i/950/depositphotos_124454090-stock-photo-address-bar-of-browser.jpg" />
         ),
+       
       },
     ],
 
@@ -67,10 +82,48 @@ class App extends React.Component {
     filtroValorMin: "",
     filtroValorMax: "",
     /* order: "", */
+    carrinho: [],
+    
+    
   };
 
-  //   adicionaViagemCarrinho = () => {
-  //    //faça aqui a lógica do carrinho//
+  removerPacoteDoCarrinho = (idPacoteARemover) => {
+   const carrinhoAtualizado = this.state.carrinho.filter(compra => compra.pacote.id !== idPacoteARemover)
+      this.state.carrinho = carrinhoAtualizado
+    this.setState({...this.state})
+    
+     }
+    atualizarCarrinho = (novoPacote) =>{
+      const compraJaAdicionada = this.state.carrinho.find(compra => compra.pacote.id === novoPacote.id)
+      if(compraJaAdicionada){
+          compraJaAdicionada.quantidade = compraJaAdicionada.quantidade + 1
+         
+           }else{
+         
+        this.state.carrinho.push({pacote: novoPacote,quantidade:1})
+
+      }
+      this.setState({...this.state})
+    }
+    totalPacotes = (totalCarrinho) =>{
+      
+        let novoValor = totalCarrinho.map((valor)=>{
+            return valor.total
+          
+           })  
+            
+
+       
+           console.log(novoValor)
+         
+        let soma = novoValor.reduce((primeiroValor,segundoValor)=> primeiroValor + segundoValor, 0)
+       
+        return soma
+        
+     }
+     
+      
+    //faça aqui a lógica do carrinho//
 
   valorMin = (event) => {
     this.setState({ filtroValorMin: event.target.value });
@@ -87,8 +140,32 @@ class App extends React.Component {
   onChangeOrder = (event) => {
     this.setState({ order: event.target.value });
   };
+  
 
   render() {
+    
+   
+    
+    const compras = this.state.carrinho.map((novaCompra,index)=>{
+        novaCompra.total = novaCompra.pacote.value * novaCompra.quantidade
+        
+          return(
+          <div key={index}>
+            <p> Produto: {novaCompra.pacote.name} </p>
+            <p>Valor: {novaCompra.pacote.value} </p>
+            <p>Qtd:{novaCompra.quantidade} </p>
+            <p>Valor total:{novaCompra.total} </p>
+            <button onClick={() => this.removerPacoteDoCarrinho(novaCompra.pacote.id)}>X</button>
+            
+          </div>
+          )
+        
+                
+        });
+       
+     let total = this.totalPacotes(this.state.carrinho);
+
+    
     const pacotesFiltrados = this.state.pacotesViagens
       .filter((pacotes) => {
         return pacotes.name
@@ -107,6 +184,7 @@ class App extends React.Component {
           pacotes.value <= this.state.filtroValorMax
         );
       })
+      
       /* .sort((pacotes, proxPacote) => {
         switch (this.state.order) {
           case "crescente":
@@ -123,14 +201,14 @@ class App extends React.Component {
             );
         }
       }) */
-      .map((pacotes, index) => {
+      .map((pacote, index) => {
         return (
           <SecaoPacotesStyle key={index}>
             <div>
-              <div>{pacotes.img}</div>
-              <p>{pacotes.name}</p>
-              <p>Valor: R$ {pacotes.value}</p>
-              <button>Adicionar ao Carrinho</button>
+              <div>{pacote.img}</div>
+              <p>{pacote.name}</p>
+              <p>Valor: R$ {pacote.value}</p>
+              <button onClick={ () => this.atualizarCarrinho(pacote)}  >Adicionar ao Carrinho</button>
             </div>
           </SecaoPacotesStyle>
         );
@@ -166,11 +244,34 @@ class App extends React.Component {
         </div>
 
         <div>
-          <Carrinho></Carrinho>
+        <NovoCarrinho>
+          <h2>Carrinho</h2>
+        {compras}
+        <h4>Totais: {total} </h4>
+        </NovoCarrinho>
+          
+        
         </div>
+        
+        
+        
+        
+          
+       
+        
+         
+          
+       
       </SecaoStyleHome>
     );
   }
 }
 
 export default App;
+    
+    
+    
+    
+     
+    
+  

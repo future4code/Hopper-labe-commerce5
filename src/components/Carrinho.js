@@ -21,8 +21,9 @@ class Carrinho extends React.Component {
   render() {
     return (
       <CarrinhoStyled>
-        <h2>Carrinho:</h2>
-        <p>Valor total: R$</p>
+        <h2 >Carrinho:  </h2>
+        <p>Produdo: {this.props.nomeCarrinho}  </p> 
+        <p>Valor total:R${this.props.valorTotal} </p>
       </CarrinhoStyled>
     )
   }
