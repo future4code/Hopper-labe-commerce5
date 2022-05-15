@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 // import { createGlobalStyle } from "styled-components";
 import Carrinho from "./components/Carrinho";
 import Filtro from "./components/Filtro";
@@ -9,38 +9,62 @@ import Astro3 from "./img/Astro3.png";
 import Astro4 from "./img/Astro4(1).png";
 import Astro5 from "./img/Astro5.png";
 
-// const GlobalStyle = createGlobalStyle`
-// *{
-//   box-sizing: border-box;
-//   margin: 0;
-//   padding: 0;
-// }
-// `;
+const GlobalStyle = createGlobalStyle`
+ *{
+   margin: 0;
+ }
+ `;
+
+ const Header = styled.header`
+ 
+ display: flex;
+ flex-direction: column;
+ align-items:center;
+ padding:4vh;
+ color:floralwhite;
+ font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ background-image: url(https://i0.wp.com/www.eusemfronteiras.com.br/wp-content/uploads/2018/07/49046802_m.jpg?ssl=1);
+ `
+
+ const Main = styled.main`
+ display: flex;
+ justify-content: space-evenly;
+ align-items: center;
+ margin-top: 5vh;
+ 
+ `
+
 
 const Imagem = styled.img`
-  height: 100px;
+  /* height: 100px; */
+width: 15vw;
 `;
-const SecaoPacotesStyle = styled.div`
+const Card = styled.div`
   display: flex;
+  text-align:center;
   border: 1px;
-  padding: 10px;
+  padding: 3vh 2vw;
   background-color: aquamarine;
   margin: 10px;
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 `;
 
-const SecaoPacFiltrado = styled.div`
-  display: flex;
+const SecaoProduto = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
   background-color: #cfbfb2;
-  justify-content: space-between;
+  margin-top: 3vh;
+  
 `;
 
-const SecaoStyleHome = styled.div`
+const Ordenacao = styled.div`
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   display: flex;
   justify-content: space-between;
-  background-color: beige;
-  height: 100vh;
-  width: 100vw;
-`;
+
+`
+
 
 class App extends React.Component {
   state = {
@@ -132,33 +156,33 @@ class App extends React.Component {
       .sort((a, b) => {
         switch (this.state.order) {
           case "crescente":
-            return  a.value - b.value
-              
-          
+            return a.value - b.value;
+
           default:
             return b.value - a.value;
-              
-            
-        };
+        }
       })
       .map((pacotes, index) => {
         return (
-          <SecaoPacotesStyle key={index}>
+          <Card key={index}>
             <div>
               <div>{pacotes.img}</div>
               <p>{pacotes.name}</p>
               <p>Valor: R$ {pacotes.value}</p>
-              <button >
-                
-                Adicionar ao Carrinho
-              </button>
+              <button>Adicionar ao Carrinho</button>
             </div>
-          </SecaoPacotesStyle>
+          </Card>
         );
       });
 
     return (
-      <SecaoStyleHome>
+      <div>
+        <GlobalStyle />
+        <Header>
+          <h1>LUNÁSTICA</h1>
+          <h3>REFERENCIA ESPACIAL EM VIAGENS LUNARES!</h3>
+        </Header>
+        <Main>
         <Filtro
           valueValMin={this.state.filtroValorMin}
           onChangeValorMin={this.valorMin}
@@ -170,6 +194,7 @@ class App extends React.Component {
         />
 
         <div>
+        <Ordenacao>
           <p>Quantidade: 10</p>
 
           <label>
@@ -183,14 +208,16 @@ class App extends React.Component {
               <option value="decrescente">Decrescente</option>
             </select>
           </label>
-
-          <SecaoPacFiltrado>{pacotesFiltrados}</SecaoPacFiltrado>
+          </Ordenacao>
+          <SecaoProduto>{pacotesFiltrados}</SecaoProduto>
         </div>
 
-        <div>
+        
           <Carrinho></Carrinho>
-        </div>
-      </SecaoStyleHome>
+       
+
+      </Main>
+      </div>
     );
   }
 }

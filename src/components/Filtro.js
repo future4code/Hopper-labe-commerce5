@@ -7,7 +7,7 @@ display: flex;
   border: 1px solid;
   width: 13rem;
   height: 50%;
-  padding: 1rem;
+  padding: 10vh 2vw;
   input {
     width: 80%;
   }
@@ -15,6 +15,22 @@ display: flex;
     padding: 0;
     margin: 0;
   }
+  align-self: flex-start;
+  margin-top: 7vh;
+
+`
+
+const Filtros = styled.div`
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+h3{
+  text-decoration-line: underline;
+}
+
+  p{
+  margin-top:5vh;
+}
+
+
 
 `
 
@@ -22,7 +38,7 @@ display: flex;
   render() {
     return (
       <FiltroStyled>
-          <div>
+          <Filtros>
         <h3>Filtros</h3>
       
         <p>Valores Minimos:</p>
@@ -33,7 +49,7 @@ display: flex;
 
         <p>Buscar por produto:</p>
         <input value={this.props.valueProduto} onChange={this.props.onChangeProduto} placeholder="Pesquisa"/>
-      </div>
+      </Filtros>
       </FiltroStyled>
     );
   }

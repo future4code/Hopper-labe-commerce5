@@ -8,13 +8,15 @@ const CarrinhoStyled = styled.div`
   width: 13rem;
   height: 20rem;
   padding: 1rem;
-  input {
-    width: 80%;
-  }
+  
   h2 {
     padding: 0;
     margin: 0;
   }
+
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  align-self: flex-start;
+  margin-top: 7vh;
 `
 
 class Carrinho extends React.Component {
