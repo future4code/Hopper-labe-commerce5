@@ -124,6 +124,33 @@ const Ordenacao = styled.div`
   }
 
 `
+const CarrinhoStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  width: 13rem;
+  height: 50%;
+  padding: 10vh 2vw;
+  color:#ede8d1;
+  align-self: flex-start;
+  margin-top: 7vh;
+  button{
+    
+  };
+   h3 {
+     font-size: 25px;
+     font-weight: 400;
+     margin-top:2vh;
+    color: #ede8d1;
+  }
+  p{
+    margin-top:2vh;
+   
+  }
+
+  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+`
 
 
 class App extends React.Component {
@@ -166,6 +193,7 @@ class App extends React.Component {
     filtroValorMax: "",
 
     order: "crescente",
+    carrinho: []
   };
 
   //   adicionaViagemCarrinho = () => {
@@ -176,6 +204,33 @@ class App extends React.Component {
   //   });
   // };
 
+  removerPacoteDoCarrinho = (idPacoteARemover) => {
+    const carrinhoAtualizado = this.state.carrinho.filter(compra => compra.pacote.id !== idPacoteARemover)
+    this.state.carrinho = carrinhoAtualizado
+    this.setState({ ...this.state })
+
+  }
+  atualizarCarrinho = (novoPacote) => {
+    const compraJaAdicionada = this.state.carrinho.find(compra => compra.pacote.id === novoPacote.id)
+    if (compraJaAdicionada) {
+      compraJaAdicionada.quantidade = compraJaAdicionada.quantidade + 1
+
+    } else {
+
+      this.state.carrinho.push({ pacote: novoPacote, quantidade: 1 })
+
+    }
+    this.setState({ ...this.state })
+  }
+  totalPacotes = (totalCarrinho) => {
+    let novoValor = totalCarrinho.map((valor) => {
+      return valor.total
+
+    })
+    let soma = novoValor.reduce((primeiroValor, segundoValor) => primeiroValor + segundoValor, 0)
+
+    return soma
+  }
   valorMin = (event) => {
     this.setState({ filtroValorMin: event.target.value });
   };
@@ -193,6 +248,25 @@ class App extends React.Component {
   };
 
   render() {
+    const compras = this.state.carrinho.map((novaCompra, index) => {
+      novaCompra.total = novaCompra.pacote.value * novaCompra.quantidade
+
+      return (
+        <div key={index}>
+          <div>
+            <button onClick={() => this.removerPacoteDoCarrinho(novaCompra.pacote.id)}>X</button>
+          </div>
+          <p> Produto: {novaCompra.pacote.name} </p>
+          <p>Valor: {novaCompra.pacote.value} </p>
+          <p>Qtd:{novaCompra.quantidade} </p>
+          <p>Valor total:{novaCompra.total} </p>
+
+
+        </div>
+      )
+    });
+
+    let total = this.totalPacotes(this.state.carrinho);
     const pacotesFiltrados = this.state.pacotesViagens
       .filter((pacote) => {
         return pacote.name
@@ -229,7 +303,7 @@ class App extends React.Component {
               <div>{pacote.img}</div>
               <p>{pacote.name}</p>
               <p>Valor: R$ {pacote.value}</p>
-              <button>Adicionar ao Carrinho</button>
+              <button onClick={() => this.atualizarCarrinho(pacote)}>Adicionar ao Carrinho</button>
             </div>
           </Card>
         );
@@ -274,15 +348,19 @@ class App extends React.Component {
             </Ordenacao>
 
             <SecaoProduto>
-              
+
 
               {pacotesFiltrados}
 
             </SecaoProduto>
           </div>
 
+          <CarrinhoStyled>
+            <h3>Carrinho:</h3>
+            {compras}
+            <h5>Totais de compra:{total} </h5>
+          </CarrinhoStyled>
 
-          <Carrinho></Carrinho>
 
 
         </Main>
