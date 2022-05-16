@@ -1,7 +1,5 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-// import { createGlobalStyle } from "styled-components";
-import Carrinho from "./components/Carrinho";
 import Filtro from "./components/Filtro";
 import Astro1 from "./img/Astro1.png";
 import Astro2 from "./img/Astro2.png";
@@ -10,6 +8,8 @@ import Astro4 from "./img/Astro4(1).png";
 import Astro5 from "./img/Astro5.png";
 import ImagemFundo from "./img/LuaFundoInteira.png"
 import Foguete from "./icons/foguete.png";
+
+
 
 const GlobalStyle = createGlobalStyle`
  *{
@@ -30,7 +30,7 @@ const Header = styled.header`
  h1{
    display: flex;
    color: #1f110e;
-   /* align-items:left; */
+   
    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
    
    
@@ -52,34 +52,48 @@ width: 30px;
 
 
 `
+
 const Main = styled.main`
  display: flex;
  justify-content: space-evenly;
  align-items: center;
  background-image: url(${ImagemFundo});
 background-size: cover;
-/* h3{
-  display: flex;
-  font-size:25px;
-   color: #ede8d1;
 
-} */
  
  `
 
 
 const Imagem = styled.img`
-  /* height: 100px; */
+  
 width: 15vw;
 `;
 const Card = styled.div`
   display: flex;
   text-align:center;
+  align-items: center;
   border: 1px;
   padding: 3vh 2vw;
   background-color: #bbb8a3;
   margin: 10px;
   font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  p{
+    font-size:20px;
+   color: #1f110e ;
+   font-weight: lighter;
+  }
+  button{
+background-color:  #ede8d1; 
+border: none;
+color: #797870 ;
+padding: 10px 20px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 16px;
+  }
+  
 
 `;
 
@@ -90,16 +104,15 @@ const SecaoProduto = styled.div`
   h3{
   display: flex;
   font-size:25px;
-   color: #ede8d1;
+   
 
 }
 
+
+
+
   
-/* align-self: flex-end; */
-  
-  /* background-color: #cfbfb2; */
-  /* margin-top: 3vh; */
-  
+
 `;
 
 const Ordenacao = styled.div`
@@ -131,26 +144,32 @@ const CarrinhoStyled = styled.div`
   width: 13rem;
   height: 50%;
   padding: 10vh 2vw;
-  color:#ede8d1;
+  color:#1f110e;
   align-self: flex-start;
   margin-top: 7vh;
-  button{
+  background-color: #ede8d1;
+  opacity: 0.6;
+  button:hover{
+   
     
   };
    h3 {
      font-size: 25px;
      font-weight: 400;
      margin-top:2vh;
-    color: #ede8d1;
+    color: #1f110e;
+    text-decoration: underline;
   }
   p{
     margin-top:2vh;
+    
    
   }
 
   font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   
 `
+
 
 
 class App extends React.Component {
@@ -196,13 +215,7 @@ class App extends React.Component {
     carrinho: []
   };
 
-  //   adicionaViagemCarrinho = () => {
-  //    //faça aqui a lógica do carrinho//
-  // addCarinho = (viagem) => {
-  //   this.setState({
-  //     carrinho: [...this.state.carrinho, viagem],
-  //   });
-  // };
+
 
   removerPacoteDoCarrinho = (idPacoteARemover) => {
     const carrinhoAtualizado = this.state.carrinho.filter(compra => compra.pacote.id !== idPacoteARemover)
@@ -303,7 +316,7 @@ class App extends React.Component {
               <div>{pacote.img}</div>
               <p>{pacote.name}</p>
               <p>Valor: R$ {pacote.value}</p>
-              <button onClick={() => this.atualizarCarrinho(pacote)}>Adicionar ao Carrinho</button>
+              <button onClick={() => this.atualizarCarrinho(pacote)}>Adicionar ao Carrinho  </button>
             </div>
           </Card>
         );
@@ -331,8 +344,9 @@ class App extends React.Component {
           />
 
           <div>
+
             <Ordenacao>
-              <p>Quantidade: 10</p>
+
 
               <label>
                 Ordenação:
@@ -356,7 +370,7 @@ class App extends React.Component {
           </div>
 
           <CarrinhoStyled>
-            <h3>Carrinho:</h3>
+            <h3>CARRINHO: </h3>
             {compras}
             <h5>Totais de compra:{total} </h5>
           </CarrinhoStyled>

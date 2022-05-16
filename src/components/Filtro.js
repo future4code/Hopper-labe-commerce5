@@ -8,7 +8,9 @@ display: flex;
   width: 13rem;
   height: 50%;
   padding: 10vh 2vw;
-  color:#ede8d1;
+  color:#1f110e;
+  background-color: #ede8d1;
+  opacity: 0.6;
   input {
     width: 80%;
   }
