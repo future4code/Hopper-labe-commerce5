@@ -34,6 +34,18 @@ const Header = styled.header`
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     font-weight: bolder;
   }
+
+  @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+   {
+     display: flex;
+     flex-direction: column;
+     text-align:center;
+}
+
+
+
+
+
 `;
 const ImagemLogo = styled.img`
   display: flex;
@@ -47,6 +59,13 @@ const Main = styled.main`
   align-items: center;
   background-image: url(${ImagemFundo});
   background-size: cover;
+
+  @media screen and (min-device-width: 320px) and (max-device-width: 480px) {
+     {
+      display: flex;
+      flex-direction: column;
+    }
+  }
 `;
 
 const Imagem = styled.img`
